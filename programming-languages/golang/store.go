@@ -1,0 +1,8 @@
+package main
+
+type Store interface {
+	Get(key string) ([]byte, error)
+	Set(key string, value []byte) error
+	Delete(key string) error
+	Keys() ([]string, error)
+}
