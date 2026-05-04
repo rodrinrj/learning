@@ -31,14 +31,16 @@ func TestStoreGet(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := store.Get(tc.key)
-		if err != nil && tc.err == nil {
-			t.Errorf("%s: got unexpected error %e", tc.name, err)
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			got, err := store.Get(tc.key)
+			if err != nil && tc.err == nil {
+				t.Errorf("got unexpected error %e", err)
+			}
 
-		if string(tc.wanted) != string(got) {
-			t.Errorf("%s: wanted %s, got %s", tc.name, string(tc.wanted), string(got))
-		}
+			if string(tc.wanted) != string(got) {
+				t.Errorf("wanted %s, got %s", string(tc.wanted), string(got))
+			}
+		})
 	}
 }
 
@@ -68,19 +70,21 @@ func TestStoreSet(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		err := store.Set(tc.key, tc.value)
-		if err != nil && tc.err == nil {
-			t.Errorf("%s: got unexpected error %e", tc.name, err)
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			err := store.Set(tc.key, tc.value)
+			if err != nil && tc.err == nil {
+				t.Errorf("got unexpected error %e", err)
+			}
 
-		got, err := store.Get(tc.key)
-		if err != nil {
-			t.Errorf("%s: got unexpected error %e", tc.name, err)
-		}
+			got, err := store.Get(tc.key)
+			if err != nil {
+				t.Errorf("got unexpected error %e", err)
+			}
 
-		if string(tc.value) != string(got) {
-			t.Errorf("%s: wanted %s, got %s", tc.name, string(tc.value), string(got))
-		}
+			if string(tc.value) != string(got) {
+				t.Errorf("wanted %s, got %s", string(tc.value), string(got))
+			}
+		})
 	}
 }
 
@@ -107,15 +111,17 @@ func TestStoreDelete(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		err := store.Delete(tc.key)
-		if err != nil && tc.err == nil {
-			t.Errorf("%s: got unexpected error %e", tc.name, err)
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			err := store.Delete(tc.key)
+			if err != nil && tc.err == nil {
+				t.Errorf("got unexpected error %e", err)
+			}
 
-		value, _ := store.Get(tc.key)
-		if value != nil {
-			t.Errorf("%s: should've thrown", tc.name)
-		}
+			value, _ := store.Get(tc.key)
+			if value != nil {
+				t.Errorf("should've thrown")
+			}
+		})
 	}
 }
 
@@ -138,14 +144,16 @@ func TestStoreKeys(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		store := InMemoryStore{}
-		for _, key := range tc.keys {
-			store.Set(key, []byte(key))
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			store := InMemoryStore{}
+			for _, key := range tc.keys {
+				store.Set(key, []byte(key))
+			}
 
-		keys := store.Keys()
-		if len(keys) != len(tc.keys) {
-			t.Errorf("%s: wanted length of %d got %d", tc.name, len(tc.keys), len(keys))
-		}
+			keys, _ := store.Keys()
+			if len(keys) != len(tc.keys) {
+				t.Errorf("wanted length %d, got %d", len(tc.keys), len(keys))
+			}
+		})
 	}
 }

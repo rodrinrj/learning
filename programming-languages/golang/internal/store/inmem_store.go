@@ -1,6 +1,9 @@
 package store
 
-import "fmt"
+import (
+	"maps"
+	"slices"
+)
 
 type InMemoryStore map[string][]byte
 
@@ -8,27 +11,36 @@ type InMemoryStore map[string][]byte
 func (s InMemoryStore) Get(key string) ([]byte, error) {
 	value, exists := s[key]
 	if !exists {
-		return nil, fmt.Errorf("key does not exist")
+		return nil, ErrKeyNotFound
 	}
 
 	return value, nil
 }
 
 func (s InMemoryStore) Set(key string, value []byte) error {
+	if s == nil {
+		return ErrSetFailed
+	}
+
 	s[key] = value
 	return nil
 }
 
 func (s InMemoryStore) Delete(key string) error {
+	if s == nil {
+		return ErrDelFailed
+	}
+
 	delete(s, key)
 	return nil
 }
 
-func (s InMemoryStore) Keys() []string {
-	keys := []string{}
-	for key := range s {
-		keys = append(keys, key)
+func (s InMemoryStore) Keys() ([]string, error) {
+	if s == nil {
+		return nil, ErrKeysFailed
 	}
 
-	return keys
+	keys := slices.Collect(maps.Keys(s))
+
+	return keys, nil
 }
