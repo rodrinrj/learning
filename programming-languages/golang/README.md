@@ -9,7 +9,7 @@ Build a correct, single-threaded in-memory KV store with a clean API.
 ### Milestones
 
 - [x] Define a Store interface with Get, Set, Delete and Keys methods
-- [ ] Implement the Store with a plain `map[string][]byte`
+- [x] Implement the Store with a plain `map[string][]byte`
 - [ ] Write table-driven tests with testing package
 - [ ] Add a CLI client using cobra or flag package
 - [ ] Define and return typed errors
