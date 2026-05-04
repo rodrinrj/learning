@@ -14,6 +14,7 @@ var getCmd = &cobra.Command{
 		value, err := Store.Get(args[0])
 		if err != nil {
 			cmd.PrintErrln("an error ocurred")
+			return
 		}
 
 		cmd.Println(string(value))

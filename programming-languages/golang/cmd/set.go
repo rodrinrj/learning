@@ -16,6 +16,7 @@ var setCmd = &cobra.Command{
 		err := Store.Set(args[0], []byte(args[1]))
 		if err != nil {
 			cmd.PrintErrln("an error ocurred")
+			return
 		}
 
 		cmd.Println("key was set correctly")

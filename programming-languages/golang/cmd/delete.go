@@ -14,6 +14,7 @@ var delCmd = &cobra.Command{
 		err := Store.Delete(args[0])
 		if err != nil {
 			cmd.PrintErrln("an error ocurred")
+			return
 		}
 
 		cmd.Println("key was deleted successfully")

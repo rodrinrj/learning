@@ -1,7 +1,7 @@
 package store
 
 import (
-	"fmt"
+	"errors"
 	"testing"
 )
 
@@ -22,7 +22,7 @@ func TestStoreGet(t *testing.T) {
 			name:   "errors when get non existing key",
 			key:    "goodbye",
 			wanted: nil,
-			err:    fmt.Errorf(""),
+			err:    ErrKeyNotFound,
 		},
 	}
 
@@ -33,7 +33,7 @@ func TestStoreGet(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			got, err := store.Get(tc.key)
-			if err != nil && tc.err == nil {
+			if err != nil && !errors.Is(err, tc.err) {
 				t.Errorf("got unexpected error %e", err)
 			}
 
