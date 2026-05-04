@@ -1,4 +1,4 @@
-package main
+package store
 
 import (
 	"fmt"
@@ -26,7 +26,7 @@ func TestStoreGet(t *testing.T) {
 		},
 	}
 
-	store := StoreImpl{
+	store := InMemoryStore{
 		"greeting": []byte("hola, mundo"),
 	}
 
@@ -63,7 +63,7 @@ func TestStoreSet(t *testing.T) {
 		},
 	}
 
-	store := StoreImpl{
+	store := InMemoryStore{
 		"goodbye": []byte("chao, mundo"),
 	}
 
@@ -102,7 +102,7 @@ func TestStoreDelete(t *testing.T) {
 		},
 	}
 
-	store := StoreImpl{
+	store := InMemoryStore{
 		"greeting": []byte("hola, mundo"),
 	}
 
@@ -138,7 +138,7 @@ func TestStoreKeys(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		store := StoreImpl{}
+		store := InMemoryStore{}
 		for _, key := range tc.keys {
 			store.Set(key, []byte(key))
 		}

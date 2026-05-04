@@ -11,7 +11,7 @@ Build a correct, single-threaded in-memory KV store with a clean API.
 - [x] Define a Store interface with Get, Set, Delete and Keys methods
 - [x] Implement the Store with a plain `map[string][]byte`
 - [x] Write table-driven tests with testing package
-- [ ] Add a CLI client using cobra or flag package
+- [x] Add a CLI client using cobra or flag package
 - [ ] Define and return typed errors
 
 ## Stage 2: Concurrent access with sync primitives
